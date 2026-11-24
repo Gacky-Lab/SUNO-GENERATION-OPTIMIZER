@@ -5,7 +5,7 @@ A closed-loop music generation optimization framework using Suno MCP, automated 
 **生成AI音楽の閉ループ生成制御・要求適合性検証・条件最適化基盤**
 
 - Maintainer: Gacky-Lab
-- Status: Partial P2 implementation / authenticated generation and provider-feedback pilot (2026-11-25 JST)
+- Status: Partial P2 implementation / repeated provider-feedback experiments (2026-11-25 JST)
 - Official Suno MCP: https://api.suno.com/mcp — authenticated connector and paid standard generation verified; raw MCP schema export and autonomous execution not verified.
 - 本プロジェクトは独立した研究開発であり、Suno公式製品・提携事業ではありません。
 
@@ -65,13 +65,20 @@ The mock fixture is not a live server capture. CLI never makes network calls or 
 - Ten completed private candidates; 50 song credits, zero download credits. Fixed conditions: 7/8 provider endpoint passes. Separate one-factor intervention: 1/2; no proven efficacy. Independent audio acceptance remains UNKNOWN.
 - Reproduce descriptive results: `python p2_pilot.py fixtures/p2_pilot_provider_results.json`.
 
+## P2 repeated experiments (v2/v3)
+
+- [V2 protocol](docs/P2_V2_PROTOCOL.md), [V3 protocol](docs/P2_V3_PROTOCOL.md), [complete DVR](docs/P2_REPLICATED_DVR.md).
+- 26 additional private candidates / 130 song credits. V2 fixed conditions 13/18 provider endpoint passes, no adaptive trigger; V3 matched follow-up A 3/4, B 2/4. The tested control change has **no demonstrated advantage**. No independent acceptance or statistical efficacy claim.
+- Reproduce: `python p2_replicated.py fixtures/p2_replicated_provider_results.json`.
+- [Offline verification helpers](verification.py): transcript CER, fail-closed budget reservation and atomic checkpoint/reconciliation. No live network calls. Audio regression tests are in a separate workflow.
+
 ## Development roadmap
 
 | Phase | Scope | Status |
 |---|---|---|
 | P0 | Offline CLI, schema import, proposal validation, basic WAV metrics | Partial implementation; see CI |
 | P1 | Authorized Suno MCP generation and evidence collection | One generation reconciled; both WAVs independently measured; full acceptance pending |
-| P2 | Budget-bounded feedback loop and baseline comparison | Provider-only pilot and operator-directed intervention completed; independent closed-loop efficacy NOT_RUN |
+| P2 | Budget-bounded feedback loop and baseline comparison | Repeated provider-only pilots and operator-directed interventions completed; superiority unproven; independent closed-loop efficacy NOT_RUN |
 | P3 | MIDI control, editing difference, reproducibility research | Planned |
 
 ## Related projects
