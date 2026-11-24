@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+/local/
+/local-*.json
+/handoff.json
+/outputs/
+*.wav
+*.mp3
+*.flac
+*.mid
