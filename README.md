@@ -5,7 +5,7 @@ A closed-loop music generation optimization framework using Suno MCP, automated 
 **生成AI音楽の閉ループ生成制御・要求適合性検証・条件最適化基盤**
 
 - Maintainer: Gacky-Lab
-- Status: Requirements / pre-implementation (2026-11-25 JST)
+- Status: Partial Phase-0 offline implementation (2026-11-25 JST)
 - Official Suno MCP: https://api.suno.com/mcp — authentication and live tool contracts have not yet been verified by this project.
 - 本プロジェクトは独立した研究開発であり、Suno公式製品・提携事業ではありません。
 
@@ -33,11 +33,22 @@ flowchart LR
   Q -->|Pass and human approval| V[AI Vocaloid Studio]
 ```
 
+## Executable Phase-0 subset / オフライン実装
+
+- [MCPインターフェース根拠・実行手順・検証範囲](docs/PHASE0_INTERFACE.md)
+- [Python CLI](suno_optimizer.py): imported tools/list contract validation, generation proposal, candidate batching, download probe, independent PCM16 WAV QA.
+- [Synthetic / mock tests](tests/test_phase0.py) / [CI status](https://github.com/Gacky-Lab/SUNO-GENERATION-OPTIMIZER/actions/workflows/phase0.yml)
+- `python -m pip install -r requirements-dev.txt`
+- `python -m unittest discover -s tests -v`
+- `python suno_optimizer.py inspect fixtures/mcp_observed_subset.mock.json`
+
+The mock fixture is not a live server capture. CLI never makes network calls or spends credits. The overview above describes the design, not the scope of the implemented subset.
+
 ## Development roadmap
 
 | Phase | Scope | Status |
 |---|---|---|
-| P0 | Offline CLI, mock adapter, audio metrics, requirements tests | Planned |
+| P0 | Offline CLI, schema import, proposal validation, basic WAV metrics | Partial implementation; see CI |
 | P1 | Authorized Suno MCP generation and evidence collection | Not run |
 | P2 | Budget-bounded feedback loop and baseline comparison | Planned |
 | P3 | MIDI control, editing difference, reproducibility research | Planned |
@@ -51,4 +62,4 @@ flowchart LR
 
 Default to offline tests. Live generation requires authorized access, explicit budget approval and confirmed tool capabilities. Do not commit credentials, signed URLs, unpublished music or private logs. Human approval is required before handing off an accepted track; no automatic release. Evaluation thresholds are provisional, not proven predictions of musical appeal or commercial success.
 
-The requirements document is the current source of truth. No operational optimizer, live Suno integration or measured quality improvement is claimed at this stage.
+The requirements document is the current source of truth. No full operational optimizer, live Suno integration or measured quality improvement is claimed at this stage.
