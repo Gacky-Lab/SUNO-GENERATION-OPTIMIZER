@@ -89,7 +89,7 @@ def revision(plan_args, rows, budget, spent, upper_cost, attempts, max_attempts)
         integer(v,name,0,1_000_000)
     if upper_cost==0 or attempts>=max_attempts or spent+upper_cost>budget:
         return {"decision":"STOP_BUDGET_OR_LIMIT"}
-    if gate(rows)["overall"]!="FAIL" or any(r["mandatory"] and r["status"]=="UNKNOWN" for r in rows):
+    if gate(rows)["overall"]!="FAIL" or any(r["mandatory"] and (r["status"]=="UNKNOWN" or (r["status"]=="PASS" and r.get("source") not in ("INDEPENDENT","HUMAN"))) for r in rows):
         return {"decision":"STOP_OR_REVIEW"}
     # Only tune style adherence, and only for a confirmed independent tempo failure.
     if not any(r["id"]=="R-01" and r["mandatory"] and r["status"]=="FAIL"
