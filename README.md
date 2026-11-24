@@ -5,8 +5,8 @@ A closed-loop music generation optimization framework using Suno MCP, automated 
 **生成AI音楽の閉ループ生成制御・要求適合性検証・条件最適化基盤**
 
 - Maintainer: Gacky-Lab
-- Status: Partial Phase-0 implementation / authenticated read-only interface audit (2026-11-25 JST)
-- Official Suno MCP: https://api.suno.com/mcp — authenticated read-only connector verified; raw MCP schema export and paid generation not yet verified.
+- Status: Partial P2 implementation / authenticated generation and provider-feedback pilot (2026-11-25 JST)
+- Official Suno MCP: https://api.suno.com/mcp — authenticated connector and paid standard generation verified; raw MCP schema export and autonomous execution not verified.
 - 本プロジェクトは独立した研究開発であり、Suno公式製品・提携事業ではありません。
 
 ## System overview / システム構想
@@ -59,13 +59,19 @@ The mock fixture is not a live server capture. CLI never makes network calls or 
 
 - [independent_qa.py](independent_qa.py) / [audio dependencies](requirements-audio.txt): spectral-onset beat estimation, tempo alternatives, decoded duration, loudness and true peak using librosa / FFmpeg. Actual two-song results in the P1 DVR. Local execution only, no private audio in Git. No automatic acceptance.
 
+## P2 provider-feedback pilot
+
+- [Pre-registered protocol](docs/P2_PILOT_PROTOCOL.md), [separate intervention protocol](docs/P2_INTERVENTION_PROTOCOL.md), [DVR](docs/P2_PILOT_DVR.md).
+- Ten completed private candidates; 50 song credits, zero download credits. Fixed conditions: 7/8 provider endpoint passes. Separate one-factor intervention: 1/2; no proven efficacy. Independent audio acceptance remains UNKNOWN.
+- Reproduce descriptive results: `python p2_pilot.py fixtures/p2_pilot_provider_results.json`.
+
 ## Development roadmap
 
 | Phase | Scope | Status |
 |---|---|---|
 | P0 | Offline CLI, schema import, proposal validation, basic WAV metrics | Partial implementation; see CI |
 | P1 | Authorized Suno MCP generation and evidence collection | One generation reconciled; both WAVs independently measured; full acceptance pending |
-| P2 | Budget-bounded feedback loop and baseline comparison | Partial offline policy and aggregation; real experiment NOT_RUN |
+| P2 | Budget-bounded feedback loop and baseline comparison | Provider-only pilot and operator-directed intervention completed; independent closed-loop efficacy NOT_RUN |
 | P3 | MIDI control, editing difference, reproducibility research | Planned |
 
 ## Related projects
