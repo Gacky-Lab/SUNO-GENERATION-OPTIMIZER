@@ -108,6 +108,10 @@ class TestContract(unittest.TestCase):
                    {"controls":{"variety":True},"advanced":True}):
             with self.assertRaises(s.ContractError): plan(**kw)
         self.assertEqual(s.candidate_ids({"text":json.dumps({"clip_ids":["a","b"]})},2),["a","b"])
+    def test_mixed_creation_reply_stops(self):
+        raw = {"text": json.dumps({"clip_ids":["mock-a","mock-b"]}) + "\nAdditional host output"}
+        with self.assertRaises(ValueError):
+            s.candidate_ids(raw,2)
     def test_wav(self):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d)/"x.wav"
