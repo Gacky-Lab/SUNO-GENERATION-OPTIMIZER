@@ -1,0 +1,112 @@
+{
+  "target_bpm": 175,
+  "tolerance_bpm": 5,
+  "min_duration_s": 25,
+  "max_duration_s": 45,
+  "initial_style_influence": 0.4,
+  "intervention_style_influence": 0.5,
+  "credits_per_call": 10,
+  "observed_credit_delta": 50,
+  "rows": [
+    {
+      "candidate": "C1",
+      "arm": "A",
+      "call": "A1",
+      "style_influence": 0.4,
+      "bpm": 176,
+      "duration_s": 34.72,
+      "status": "complete",
+      "source": "SUNO_PROVIDER_NOT_INDEPENDENT"
+    },
+    {
+      "candidate": "C2",
+      "arm": "A",
+      "call": "A1",
+      "style_influence": 0.4,
+      "bpm": 174.7,
+      "duration_s": 34.6,
+      "status": "complete",
+      "source": "SUNO_PROVIDER_NOT_INDEPENDENT"
+    },
+    {
+      "candidate": "C3",
+      "arm": "B",
+      "call": "B1",
+      "style_influence": 0.4,
+      "bpm": 136,
+      "duration_s": 34.4,
+      "status": "complete",
+      "source": "SUNO_PROVIDER_NOT_INDEPENDENT"
+    },
+    {
+      "candidate": "C4",
+      "arm": "B",
+      "call": "B1",
+      "style_influence": 0.4,
+      "bpm": 178.7,
+      "duration_s": 34.8,
+      "status": "complete",
+      "source": "SUNO_PROVIDER_NOT_INDEPENDENT"
+    },
+    {
+      "candidate": "C5",
+      "arm": "B",
+      "call": "B2",
+      "style_influence": 0.4,
+      "bpm": 174,
+      "duration_s": 34.48,
+      "status": "complete",
+      "source": "SUNO_PROVIDER_NOT_INDEPENDENT"
+    },
+    {
+      "candidate": "C6",
+      "arm": "B",
+      "call": "B2",
+      "style_influence": 0.4,
+      "bpm": 175,
+      "duration_s": 34.56,
+      "status": "complete",
+      "source": "SUNO_PROVIDER_NOT_INDEPENDENT"
+    },
+    {
+      "candidate": "C7",
+      "arm": "A",
+      "call": "A2",
+      "style_influence": 0.4,
+      "bpm": 179,
+      "duration_s": 35,
+      "status": "complete",
+      "source": "SUNO_PROVIDER_NOT_INDEPENDENT"
+    },
+    {
+      "candidate": "C8",
+      "arm": "A",
+      "call": "A2",
+      "style_influence": 0.4,
+      "bpm": 175.8,
+      "duration_s": 34.2,
+      "status": "complete",
+      "source": "SUNO_PROVIDER_NOT_INDEPENDENT"
+    },
+    {
+      "candidate": "C9",
+      "arm": "I",
+      "call": "INT1",
+      "style_influence": 0.5,
+      "bpm": 180.9,
+      "duration_s": 34.92,
+      "status": "complete",
+      "source": "SUNO_PROVIDER_NOT_INDEPENDENT"
+    },
+    {
+      "candidate": "C10",
+      "arm": "I",
+      "call": "INT1",
+      "style_influence": 0.5,
+      "bpm": 178,
+      "duration_s": 35.56,
+      "status": "complete",
+      "source": "SUNO_PROVIDER_NOT_INDEPENDENT"
+    }
+  ]
+}
