@@ -51,12 +51,16 @@ The mock fixture is not a live server capture. CLI never makes network calls or 
 - [Provider evidence and bounded feedback helpers](live_evidence.py): redacted summaries, mandatory quality gate, one-factor revision proposal, descriptive A/B aggregation.
 - No new song generation, independent real-audio QA, paid operations or end-to-end quality improvement validated.
 
+## P1 generation attempt
+
+- [Creation reconciliation DVR](docs/P1_CREATION_RECONCILIATION.md): authorized standard generation invoked once; host response decoding failed, outcome unknown. No automatic replay. See DVR for limits.
+
 ## Development roadmap
 
 | Phase | Scope | Status |
 |---|---|---|
 | P0 | Offline CLI, schema import, proposal validation, basic WAV metrics | Partial implementation; see CI |
-| P1 | Authorized Suno MCP generation and evidence collection | Read-only verified; generation NOT_RUN |
+| P1 | Authorized Suno MCP generation and evidence collection | Read-only verified; one generation invocation SUBMISSION_UNKNOWN |
 | P2 | Budget-bounded feedback loop and baseline comparison | Partial offline policy and aggregation; real experiment NOT_RUN |
 | P3 | MIDI control, editing difference, reproducibility research | Planned |
 
