@@ -49,18 +49,22 @@ The mock fixture is not a live server capture. CLI never makes network calls or 
 **[Authenticated interface audit and redacted DVR](docs/AUTHENTICATED_INTERFACE_DVR.md)** — account usage, existing-song retrieval, analysis, alignment and completion wait succeeded. Generation and download credit balances unchanged. No private account values are published.
 
 - [Provider evidence and bounded feedback helpers](live_evidence.py): redacted summaries, mandatory quality gate, one-factor revision proposal, descriptive A/B aggregation.
-- See the P1 creation DVR below for the subsequent generation smoke test. Independent real-audio QA and end-to-end quality improvement remain unverified.
+- See the P1 creation DVR below for the subsequent generation smoke test. Independent real-audio measurement completed in the follow-up; full acceptance and end-to-end quality improvement remain unverified.
 
 ## P1 generation attempt
 
-- [Creation reconciliation DVR](docs/P1_CREATION_RECONCILIATION.md): one authorized standard generation reconciled to two completed private candidates, 10 song credits consumed. Host response decode failed; recovered without replay. Both WAV downloads subsequently authorized (2 download credits); binary transfer to independent analyzer remains blocked. Offline CI: 23/23 on Python 3.11 and 3.13.
+- [Creation reconciliation DVR](docs/P1_CREATION_RECONCILIATION.md): one authorized standard generation reconciled to two completed private candidates, 10 song credits consumed. Host response decode failed; recovered without replay. Both WAV downloads authorized (2 download credits); manual private upload enabled independent WAV measurement on both candidates. Core offline CI: 23/23 on Python 3.11 and 3.13. Optional real-audio analyzer executed locally; mandatory tempo/lyric acceptance and controlled optimization comparison remain unverified.
+
+## Independent WAV measurement
+
+- [independent_qa.py](independent_qa.py) / [audio dependencies](requirements-audio.txt): spectral-onset beat estimation, tempo alternatives, decoded duration, loudness and true peak using librosa / FFmpeg. Actual two-song results in the P1 DVR. Local execution only, no private audio in Git. No automatic acceptance.
 
 ## Development roadmap
 
 | Phase | Scope | Status |
 |---|---|---|
 | P0 | Offline CLI, schema import, proposal validation, basic WAV metrics | Partial implementation; see CI |
-| P1 | Authorized Suno MCP generation and evidence collection | Read-only verified; one generation reconciled, independent QA pending |
+| P1 | Authorized Suno MCP generation and evidence collection | One generation reconciled; both WAVs independently measured; full acceptance pending |
 | P2 | Budget-bounded feedback loop and baseline comparison | Partial offline policy and aggregation; real experiment NOT_RUN |
 | P3 | MIDI control, editing difference, reproducibility research | Planned |
 
