@@ -9,6 +9,15 @@ A closed-loop music generation optimization framework using Suno MCP, automated 
 - Official Suno MCP: https://api.suno.com/mcp — authentication and live tool contracts have not yet been verified by this project.
 - 本プロジェクトは独立した研究開発であり、Suno公式製品・提携事業ではありません。
 
+## System overview / システム構想
+
+![生成AI音楽の閉ループ生成制御・要求適合性検証・条件最適化の構想図（要件定義段階、実機未検証）](images/overview-16x9.svg)
+
+- [16:9 SVG原図](images/overview-16x9.svg)
+- [HTML原本（保存してブラウザで表示）](docs/overview-16x9.html)
+- PNG出力は [Render system overview PNG](https://github.com/Gacky-Lab/SUNO-GENERATION-OPTIMIZER/actions/workflows/render-overview.yml) で同一原図から生成。出力成功後は `images/overview-16x9.png` に保存されます。
+- 図は要件定義の概要であり、実装・実機試験・性能実証の結果ではありません。正本は要件定義書です。
+
 ## Requirements / 要件定義
 
 **[システム要件定義書 v0.1.0（SGO-SRS-001）](docs/requirements.md)**
