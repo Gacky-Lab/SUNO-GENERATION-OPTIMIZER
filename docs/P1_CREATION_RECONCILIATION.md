@@ -60,3 +60,38 @@ The operator separately authorized two download credits for the same two private
 The successful download response establishes authorized retrieval availability, not that this runtime has received or decoded WAV bytes. Obtain the two WAVs through the download UI and supply them directly to the analyzer in a private session; do not upload them to the public repository. No repeat paid download is necessary for this test. Do not claim independent QA or handoff acceptance until measured.
 
 Regression CI for PR #2: [run 45429610642](https://github.com/Gacky-Lab/SUNO-GENERATION-OPTIMIZER/actions/runs/45429610642), 23 tests passed on both Python 3.11 and 3.13; merged into main. This CI used synthetic data, not actual song files.
+
+## Follow-up: independent real WAV QA (2026-11-25 JST)
+
+The operator supplied both downloaded WAVs directly to the private analysis runtime. Both files were decoded and measured independently of the Suno analysis. No audio, lyrics, clip identifiers, signed links or file hashes are committed. The previously blocked binary-transfer step is resolved by manual handoff, not by automated connector transfer.
+
+| Metric | Candidate A | Candidate B |
+|---|---:|---:|
+| Format | PCM16 WAV, 48 kHz, stereo | PCM16 WAV, 48 kHz, stereo |
+| Decoded duration (s) | 29.60 | 28.80 |
+| Suno BPM | 144.6 | 142.2 |
+| Independent beat-track BPM | 143.55 | 143.55 |
+| Absolute difference from Suno (BPM) | 1.05 | 1.35 |
+| Beat count (independent tracker) | 69 | 65 |
+| Integrated loudness (LUFS) | -15.9 | -16.0 |
+| Loudness range (LU) | 3.1 | 3.3 |
+| True peak (dBTP) | -4.6 | -4.8 |
+| Sample peak (dBFS) | -4.644 | -4.834 |
+| Near-full-scale samples (absolute normalized amplitude >=32760/32768) | 0 | 0 |
+| Tempo ambiguity heuristic | false | true |
+
+The original Phase-0 pulse-only tempo heuristic returned UNKNOWN for both real songs (irregular onset intervals; approximately 7.8% and 6.7% within its interval tolerance, below its 80% criterion). This exposed a real-domain limitation, not a test failure on the synthetic click fixtures. Added `independent_qa.py` for spectral-onset beat tracking, autocorrelation alternatives, decoded duration, EBU R128 loudness and true peak. The script was run locally on both supplied WAVs. Environment: librosa 0.11.0, soundfile 0.13.1, numpy 2.3.5, scipy 1.17.0, FFmpeg 7.1.5; audio dependencies are recorded in `requirements-audio.txt` (not a full transitive lock).
+
+For A, the strongest inspected autocorrelation candidate was 143.55 BPM (relative autocorrelation 0.468). For B, alternatives 191.41 (0.598) and 93.96 (0.590) exceeded the main 143.55 (0.523). These are periodicity candidates, not established musical tempos or calibrated confidence. Both main BPM estimates lie inside 135–145, but tempo acceptance still requires human beat confirmation. The two files decode successfully and the measured duration agrees with provider metadata. No near-full-scale samples were found; this does not prove absence of distortion or mastering defects. Loudness and peak are descriptive; no streaming-platform target is imposed.
+
+| DVR follow-up | Result |
+|---|---|
+| Manual binary handoff and WAV decode | PASS (2/2) |
+| Independent duration and provider agreement | PASS (2/2; exact displayed duration) |
+| Independent BPM estimator execution | PASS (2/2); main estimates in target band |
+| Mandatory tempo acceptance | UNKNOWN (human verification pending; B ambiguity) |
+| Loudness and peak measurement | PASS (measurement obtained; no quality threshold implied) |
+| Independent sung-lyric accuracy / author approval | NOT_RUN |
+| Closed-loop regeneration, baseline comparison, downstream handoff | NOT_RUN |
+
+Reproduce locally with Python and FFmpeg installed: `python -m pip install -r requirements-audio.txt`, then `python independent_qa.py local/candidate.wav`. No network or Suno operations in the analyzer. Existing 23-case CI covers the prior core; this newly added optional analyzer was executed on the actual WAVs locally, not yet covered by GitHub Actions. Two songs from a single generation call cannot establish optimization superiority. The full mandatory quality gate remains UNKNOWN.
