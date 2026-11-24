@@ -49,18 +49,18 @@ The mock fixture is not a live server capture. CLI never makes network calls or 
 **[Authenticated interface audit and redacted DVR](docs/AUTHENTICATED_INTERFACE_DVR.md)** — account usage, existing-song retrieval, analysis, alignment and completion wait succeeded. Generation and download credit balances unchanged. No private account values are published.
 
 - [Provider evidence and bounded feedback helpers](live_evidence.py): redacted summaries, mandatory quality gate, one-factor revision proposal, descriptive A/B aggregation.
-- No new song generation, independent real-audio QA, paid operations or end-to-end quality improvement validated.
+- See the P1 creation DVR below for the subsequent generation smoke test. Independent real-audio QA and end-to-end quality improvement remain unverified.
 
 ## P1 generation attempt
 
-- [Creation reconciliation DVR](docs/P1_CREATION_RECONCILIATION.md): authorized standard generation invoked once; host response decoding failed, outcome unknown. No automatic replay. See DVR for limits.
+- [Creation reconciliation DVR](docs/P1_CREATION_RECONCILIATION.md): one authorized standard generation reconciled to two completed private candidates, 10 song credits consumed. Host response decode failed; recovered without replay. Independent WAV QA blocked by separate download consent.
 
 ## Development roadmap
 
 | Phase | Scope | Status |
 |---|---|---|
 | P0 | Offline CLI, schema import, proposal validation, basic WAV metrics | Partial implementation; see CI |
-| P1 | Authorized Suno MCP generation and evidence collection | Read-only verified; one generation invocation SUBMISSION_UNKNOWN |
+| P1 | Authorized Suno MCP generation and evidence collection | Read-only verified; one generation reconciled, independent QA pending |
 | P2 | Budget-bounded feedback loop and baseline comparison | Partial offline policy and aggregation; real experiment NOT_RUN |
 | P3 | MIDI control, editing difference, reproducibility research | Planned |
 
@@ -73,4 +73,4 @@ The mock fixture is not a live server capture. CLI never makes network calls or 
 
 Default to offline tests. Live generation requires authorized access, explicit budget approval and confirmed tool capabilities. Do not commit credentials, signed URLs, unpublished music or private logs. Human approval is required before handing off an accepted track; no automatic release. Evaluation thresholds are provisional, not proven predictions of musical appeal or commercial success.
 
-The requirements document is the current source of truth. No full operational optimizer, paid generation integration or measured quality improvement is claimed at this stage.
+The requirements document is the current source of truth. No full operational optimizer, autonomous paid generation integration or measured quality improvement is claimed at this stage.
