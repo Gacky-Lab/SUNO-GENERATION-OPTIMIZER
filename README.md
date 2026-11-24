@@ -53,7 +53,7 @@ The mock fixture is not a live server capture. CLI never makes network calls or 
 
 ## P1 generation attempt
 
-- [Creation reconciliation DVR](docs/P1_CREATION_RECONCILIATION.md): one authorized standard generation reconciled to two completed private candidates, 10 song credits consumed. Host response decode failed; recovered without replay. Independent WAV QA blocked by separate download consent.
+- [Creation reconciliation DVR](docs/P1_CREATION_RECONCILIATION.md): one authorized standard generation reconciled to two completed private candidates, 10 song credits consumed. Host response decode failed; recovered without replay. Both WAV downloads subsequently authorized (2 download credits); binary transfer to independent analyzer remains blocked. Offline CI: 23/23 on Python 3.11 and 3.13.
 
 ## Development roadmap
 
