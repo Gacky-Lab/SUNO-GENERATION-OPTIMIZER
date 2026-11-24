@@ -5,8 +5,8 @@ A closed-loop music generation optimization framework using Suno MCP, automated 
 **生成AI音楽の閉ループ生成制御・要求適合性検証・条件最適化基盤**
 
 - Maintainer: Gacky-Lab
-- Status: Partial Phase-0 offline implementation (2026-11-25 JST)
-- Official Suno MCP: https://api.suno.com/mcp — authentication and live tool contracts have not yet been verified by this project.
+- Status: Partial Phase-0 implementation / authenticated read-only interface audit (2026-11-25 JST)
+- Official Suno MCP: https://api.suno.com/mcp — authenticated read-only connector verified; raw MCP schema export and paid generation not yet verified.
 - 本プロジェクトは独立した研究開発であり、Suno公式製品・提携事業ではありません。
 
 ## System overview / システム構想
@@ -44,13 +44,20 @@ flowchart LR
 
 The mock fixture is not a live server capture. CLI never makes network calls or spends credits. The overview above describes the design, not the scope of the implemented subset.
 
+## Authenticated Suno connector verification
+
+**[Authenticated interface audit and redacted DVR](docs/AUTHENTICATED_INTERFACE_DVR.md)** — account usage, existing-song retrieval, analysis, alignment and completion wait succeeded. Generation and download credit balances unchanged. No private account values are published.
+
+- [Provider evidence and bounded feedback helpers](live_evidence.py): redacted summaries, mandatory quality gate, one-factor revision proposal, descriptive A/B aggregation.
+- No new song generation, independent real-audio QA, paid operations or end-to-end quality improvement validated.
+
 ## Development roadmap
 
 | Phase | Scope | Status |
 |---|---|---|
 | P0 | Offline CLI, schema import, proposal validation, basic WAV metrics | Partial implementation; see CI |
-| P1 | Authorized Suno MCP generation and evidence collection | Not run |
-| P2 | Budget-bounded feedback loop and baseline comparison | Planned |
+| P1 | Authorized Suno MCP generation and evidence collection | Read-only verified; generation NOT_RUN |
+| P2 | Budget-bounded feedback loop and baseline comparison | Partial offline policy and aggregation; real experiment NOT_RUN |
 | P3 | MIDI control, editing difference, reproducibility research | Planned |
 
 ## Related projects
@@ -62,4 +69,4 @@ The mock fixture is not a live server capture. CLI never makes network calls or 
 
 Default to offline tests. Live generation requires authorized access, explicit budget approval and confirmed tool capabilities. Do not commit credentials, signed URLs, unpublished music or private logs. Human approval is required before handing off an accepted track; no automatic release. Evaluation thresholds are provisional, not proven predictions of musical appeal or commercial success.
 
-The requirements document is the current source of truth. No full operational optimizer, live Suno integration or measured quality improvement is claimed at this stage.
+The requirements document is the current source of truth. No full operational optimizer, paid generation integration or measured quality improvement is claimed at this stage.
