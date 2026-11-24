@@ -1,0 +1,123 @@
+[
+  {
+    "tools": [
+      {
+        "name": "account-usage",
+        "inputSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {},
+          "required": []
+        }
+      },
+      {
+        "name": "audio-create",
+        "inputSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "lyrics": {
+              "type": "string",
+              "maxLength": 5000
+            },
+            "style": {
+              "type": "string",
+              "maxLength": 1000
+            },
+            "duration": {
+              "type": "integer",
+              "minimum": 15,
+              "maximum": 360
+            },
+            "duration_strict": {
+              "type": "boolean"
+            },
+            "idempotency_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            }
+          },
+          "required": []
+        }
+      },
+      {
+        "name": "audio-wait",
+        "inputSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ids": {
+              "type": "array",
+              "maxItems": 4,
+              "items": {
+                "type": "string"
+              }
+            },
+            "until": {
+              "enum": [
+                "playable",
+                "complete"
+              ]
+            }
+          },
+          "required": []
+        }
+      },
+      {
+        "name": "audio-retrieve",
+        "inputSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id"
+          ]
+        }
+      },
+      {
+        "name": "audio-analysis",
+        "inputSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id"
+          ]
+        }
+      },
+      {
+        "name": "audio-download",
+        "inputSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "format": {
+              "enum": [
+                "mp3",
+                "wav"
+              ]
+            },
+            "confirm": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "id"
+          ]
+        }
+      }
+    ]
+  }
+]
