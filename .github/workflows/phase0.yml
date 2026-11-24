@@ -5,6 +5,7 @@ on:
     paths:
       - 'suno_optimizer.py'
       - 'live_evidence.py'
+      - 'p2_pilot.py'
       - 'tests/**'
       - 'fixtures/**'
       - 'requirements-dev.txt'
@@ -27,3 +28,4 @@ jobs:
       - run: python -m pip install -r requirements-dev.txt
       - run: python -m unittest discover -s tests -v
       - run: python suno_optimizer.py inspect fixtures/mcp_observed_subset.mock.json
+      - run: python p2_pilot.py fixtures/p2_pilot_provider_results.json
