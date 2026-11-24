@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - 'suno_optimizer.py'
+      - 'live_evidence.py'
       - 'tests/**'
       - 'fixtures/**'
       - 'requirements-dev.txt'

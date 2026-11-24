@@ -84,8 +84,8 @@ class TestContract(unittest.TestCase):
         result={"structuredContent":{"clip_ids":["mock-a","mock-b"]}}
         self.assertEqual(s.candidate_ids(result,2),["mock-a","mock-b"])
         with self.assertRaises(s.ContractError): s.candidate_ids(result,1)
-        calls=s.wait_calls(s.tools_snapshot(pages()),[str(i) for i in range(5)])
-        self.assertEqual([len(c["arguments"]["ids"]) for c in calls],[4,1])
+        calls=s.wait_calls(s.tools_snapshot(pages()),[str(i) for i in range(13)])
+        self.assertEqual([len(c["arguments"]["ids"]) for c in calls],[12,1])
         self.assertTrue(all(c["arguments"]["until"]=="complete" for c in calls))
     def test_error_and_prose(self):
         for r in [{"isError":True,"structuredContent":{"clip_ids":["a"]}},
@@ -98,6 +98,16 @@ class TestContract(unittest.TestCase):
                          "NEEDS_SEPARATE_APPROVAL")
         self.assertEqual(s.download_decision({"structuredContent":{"status":"processing"}}),
                          "WAIT_FOR_DOWNLOAD")
+    def test_current_connector_contract(self):
+        a=plan(model="v6",allowed_models=["v6"],controls={"style_influence":0.8,"variety":0},advanced=True)
+        self.assertEqual(a["call"]["arguments"]["model"],"v6")
+        self.assertEqual(a["call"]["arguments"]["controls"]["variety"],0)
+        for kw in ({"model":"v6","allowed_models":[]},
+                   {"controls":{"weirdness":0.5}},
+                   {"controls":{"audio_influence":0.5},"advanced":True},
+                   {"controls":{"variety":True},"advanced":True}):
+            with self.assertRaises(s.ContractError): plan(**kw)
+        self.assertEqual(s.candidate_ids({"text":json.dumps({"clip_ids":["a","b"]})},2),["a","b"])
     def test_wav(self):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d)/"x.wav"

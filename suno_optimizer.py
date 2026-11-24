@@ -104,7 +104,8 @@ def integer(v, name, lower, upper):
     return v
 
 def plan_create(snapshot, handoff, style, bpm, duration, run_id,
-                approved_credits, estimated_upper, remaining, max_candidates):
+                approved_credits, estimated_upper, remaining, max_candidates,
+                model=None, allowed_models=None, controls=None, advanced=False):
     """One proposal; cost/output bounds supplied by operator, never inferred.
     Not a live budget reservation. Reconfirm account usage before execution.
     """
@@ -122,6 +123,18 @@ def plan_create(snapshot, handoff, style, bpm, duration, run_id,
     text = lyric_text(handoff)
     args = {"lyrics": text, "style": f"{style}, target tempo {bpm} BPM",
             "duration": duration, "duration_strict": False}
+    if model is not None:
+        require(isinstance(allowed_models, list) and model in allowed_models, "model not granted")
+        args["model"] = model
+    if controls is not None:
+        require(advanced is True and isinstance(controls, dict) and controls, "advanced controls not granted")
+        require(set(controls) <= {"style_influence", "weirdness", "variety"}, "unsupported controls for custom lyrics")
+        for key, value in controls.items():
+            if key == "variety":
+                integer(value, key, 0, 4)
+            else:
+                require(type(value) in (int, float) and 0 <= value <= 1, "slider out of range")
+        args["controls"] = controls.copy()
     # Stable for this attempt and exact input. New attempt needs a new run_id.
     args["idempotency_key"] = "sgo-" + digest(canonical([run_id, args]))
     call = proposed_call(snapshot, "audio-create", args)
@@ -142,6 +155,9 @@ def unwrap(result):
     require(result.get("isError", False) is False, "tool reported error")
     if "structuredContent" in result:
         data = result["structuredContent"]
+    elif set(result) == {"text"} and isinstance(result["text"], str):
+        # Authorized ChatGPT connector host envelope, observed in read-only calls.
+        data = json.loads(result["text"])
     else:
         blocks = result.get("content")
         require(isinstance(blocks, list) and len(blocks) == 1 and
@@ -164,9 +180,9 @@ def wait_calls(snapshot, ids):
             all(isinstance(i, str) and i.strip() for i in ids) and
             len(set(ids)) == len(ids), "invalid candidate IDs")
     schema = snapshot["catalog"].get("audio-wait", {})
-    max_items = schema.get("properties", {}).get("ids", {}).get("maxItems", 4)
+    max_items = schema.get("properties", {}).get("ids", {}).get("maxItems", 12)
     integer(max_items, "wait batch limit", 1, 100)
-    limit = min(4, max_items)
+    limit = min(12, max_items)
     return [proposed_call(snapshot, "audio-wait",
                          {"ids": ids[i:i+limit], "until": "complete"})
             for i in range(0, len(ids), limit)]
@@ -263,6 +279,9 @@ def main():
     p.add_argument("--estimated-upper", type=int, required=True)
     p.add_argument("--remaining", type=int, required=True)
     p.add_argument("--max-candidates", type=int, required=True)
+    p.add_argument("--model")
+    p.add_argument("--usage", help="private account-usage envelope for model and controls grants")
+    p.add_argument("--controls", help="JSON object of requested sliders; no automatic defaults")
     p = sub.add_parser("wait-plan")
     p.add_argument("pages"); p.add_argument("result")
     p.add_argument("--max-candidates", type=int, required=True)
@@ -280,9 +299,13 @@ def main():
             result = {k:v for k,v in s.items() if k != "catalog"}
             result["tool_names"] = sorted(s["catalog"])
         elif a.command == "plan":
+            usage = unwrap(read_json(a.usage)) if a.usage else {}
             result = plan_create(tools_snapshot(read_json(a.pages)), read_json(a.handoff),
                                  a.style, a.bpm, a.duration, a.attempt_id,
-                                 a.approved_credits, a.estimated_upper, a.remaining, a.max_candidates)
+                                 a.approved_credits, a.estimated_upper, a.remaining, a.max_candidates,
+                                 model=a.model, allowed_models=usage.get("allowed_models"),
+                                 controls=json.loads(a.controls) if a.controls else None,
+                                 advanced="controls.advanced" in usage.get("features", []))
         elif a.command == "wait-plan":
             s = tools_snapshot(read_json(a.pages))
             result = wait_calls(s, candidate_ids(read_json(a.result), a.max_candidates))

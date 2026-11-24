@@ -1,13 +1,13 @@
 # Phase-0: MCP contract planner / independent WAV QA
 
-Date: 2026-11-25 JST. **Partial offline implementation; no authenticated Suno calls performed.** This is a small executable research baseline, not the full optimizer.
+Date: 2026-11-25 JST. **Partial offline implementation. Subsequent authenticated read-only connector tests are recorded in [the current DVR](AUTHENTICATED_INTERFACE_DVR.md); no paid generation performed.** This is a small executable research baseline, not the full optimizer.
 
 ## 1. Evidence levels
 
 - Official: [connection instructions](https://help.suno.com/en/articles/14551425), [capabilities](https://help.suno.com/en/articles/14551361), [FAQ](https://help.suno.com/en/articles/14486145), [MCP beta](https://suno.com/release-notes/suno-mcp-beta).
 - Observed by a third party, not guaranteed for this account: [WillMakes, 2026-10-30/31 tool observations](https://github.com/WillMakes/ai-music-maker/blob/main/docs/suno-mcp.md).
 - Local test fixture: fixtures/mcp_observed_subset.mock.json is a deliberately reduced, independently authored input-schema example; NOT a server capture. It must never be used as proof of account capability.
-- Actual account authorization, current tool names, parameters, permissions, cost and response envelopes: NOT_RUN. P1 is blocked until verified.
+- Authenticated read-only connector declarations and responses have now been inspected; see the current DVR. Raw tools/list export, actual generation cost and paid calls remain NOT_RUN.
 
 ## 2. Actual interface mapping
 
@@ -16,7 +16,7 @@ Date: 2026-11-25 JST. **Partial offline implementation; no authenticated Suno ca
 | Credits | account-usage | Discover capability; operator checks current plan, credit limits and cost |
 | Custom generation | audio-create | Build lyrics/style/duration/duration_strict/idempotency_key proposal against supplied schema; BPM remains a style instruction |
 | Multiple candidates | clip_ids | Parse structured result or a single JSON text block, reject missing/duplicate/excess IDs |
-| Completion | audio-wait | Build ids/until=complete batches of at most four, further limited by schema |
+| Completion | audio-wait | Build ids/until=complete batches of at most twelve, further limited by schema |
 | Single candidate info | audio-retrieve | Capability discovery only; completion and duration must be verified in host |
 | Musical analysis | audio-analysis | Capability discovery only; do not equate provider metadata with independent measurement |
 | WAV retrieval | audio-download | Build confirm=false probe; classify requires_credit as separate approval and processing as pending. No URL persistence or fetching |
@@ -64,7 +64,7 @@ Tempo is UNKNOWN for automatic acceptance unless the operator confirms the estim
 | SRS test | Current code / proposed test | Scope |
 |---|---|---|
 | T02 | lyric SHA validation | LF normalization, version and identifiers; full upstream schema compatibility not yet tested |
-| T03/T04 | plan and tools_snapshot | Deterministic proposal, schema fingerprint, fixture pagination; real contract NOT_RUN |
+| T03/T04 | plan and tools_snapshot | Deterministic proposal, schema fingerprint, fixture pagination; raw schema export / paid contract NOT_RUN |
 | T06 | candidate_ids / wait_calls | Mock structured envelopes and batching; no live status polling |
 | T07 | download_probe / decision | Probe only, operator handles download |
 | T08 | wav_metrics | PCM16 synthetic pulse and duration tests; real music NOT_RUN |
