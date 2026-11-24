@@ -1,2 +1,45 @@
 # SUNO-GENERATION-OPTIMIZER
+
 A closed-loop music generation optimization framework using Suno MCP, automated quality evaluation, requirements verification, prompt optimization, and reproducible experiments. Developed by Gacky-Lab.
+
+**生成AI音楽の閉ループ生成制御・要求適合性検証・条件最適化基盤**
+
+- Maintainer: Gacky-Lab
+- Status: Requirements / pre-implementation (2026-11-25 JST)
+- Official Suno MCP: https://api.suno.com/mcp — authentication and live tool contracts have not yet been verified by this project.
+- 本プロジェクトは独立した研究開発であり、Suno公式製品・提携事業ではありません。
+
+## Requirements / 要件定義
+
+**[システム要件定義書 v0.1.0（SGO-SRS-001）](docs/requirements.md)**
+
+公式MCPの公開機能を基準に、楽曲要求、生成・解析、独立検査、予算付き再生成、データ契約、DVP/DVR、研究比較計画を定義しています。ツール名・引数・権限・費用は認証後に確認します。
+
+```mermaid
+flowchart LR
+  L[Lyric Design] --> R[Requirements]
+  R --> G[Suno MCP]
+  G --> Q[Independent QA]
+  Q -->|Fail / within budget| R
+  Q -->|Pass and human approval| V[AI Vocaloid Studio]
+```
+
+## Development roadmap
+
+| Phase | Scope | Status |
+|---|---|---|
+| P0 | Offline CLI, mock adapter, audio metrics, requirements tests | Planned |
+| P1 | Authorized Suno MCP generation and evidence collection | Not run |
+| P2 | Budget-bounded feedback loop and baseline comparison | Planned |
+| P3 | MIDI control, editing difference, reproducibility research | Planned |
+
+## Related projects
+
+- [LYRIC-DESIGN-FRAMEWORK](https://github.com/Gacky-Lab/LYRIC-DESIGN-FRAMEWORK): lyric design and versioned Lyric Handoff.
+- [AI-VOCALOID-STUDIO](https://github.com/Gacky-Lab/AI-VOCALOID-STUDIO): downstream vocal synthesis and DAW integration design.
+
+## Safety and research boundaries
+
+Default to offline tests. Live generation requires authorized access, explicit budget approval and confirmed tool capabilities. Do not commit credentials, signed URLs, unpublished music or private logs. Human approval is required before handing off an accepted track; no automatic release. Evaluation thresholds are provisional, not proven predictions of musical appeal or commercial success.
+
+The requirements document is the current source of truth. No operational optimizer, live Suno integration or measured quality improvement is claimed at this stage.
