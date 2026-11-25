@@ -1,0 +1,37 @@
+name: Initial alpha publication
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/initial-alpha-release.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: initial-alpha-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      TAG: v0.2.0-alpha
+      TARGET: c45f0db2ccb3deeed5f736cd3f4a58ced0cf162a
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Publish fixed research alpha if absent
+        run: |
+          set -euo pipefail
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release already exists; no changes"; exit 0
+          fi
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null; then
+            echo "Existing tag without release; review manually"; exit 1
+          else
+            status=$?; test "$status" -eq 2
+          fi
+          gh release create "$TAG" --target "$TARGET" --prerelease --title "$TAG | Suno optimization research alpha" --notes-file docs/releases/v0.2.0-alpha.md
