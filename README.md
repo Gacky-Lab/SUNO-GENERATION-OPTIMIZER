@@ -1,5 +1,8 @@
 # SUNO-GENERATION-OPTIMIZER
 
+[![Offline CI](https://github.com/Gacky-Lab/SUNO-GENERATION-OPTIMIZER/actions/workflows/phase0.yml/badge.svg?branch=main)](https://github.com/Gacky-Lab/SUNO-GENERATION-OPTIMIZER/actions/workflows/phase0.yml) · [Gacky-Lab research portfolio](https://github.com/Gacky-Lab/AI-MUSIC-VIDEO-STUDIO/blob/main/docs/profile/README.md)
+
+
 A closed-loop music generation optimization framework using Suno MCP, automated quality evaluation, requirements verification, prompt optimization, and reproducible experiments. Developed by Gacky-Lab.
 
 **生成AI音楽の閉ループ生成制御・要求適合性検証・条件最適化基盤**
