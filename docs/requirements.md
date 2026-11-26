@@ -10,6 +10,9 @@
 | 対象 | 個人の正規Sunoアカウントを用いた生成音楽の要求適合性検証・閉ループ最適化 |
 | 規範 | MUST＝必須、SHOULD＝推奨、MAY＝拡張。P0＝オフライン、P1＝最小実機、P2＝閉ループ、P3＝研究拡張 |
 
+> **現況への案内（2026-11-26 JST）:** 上表は設計時のベースラインであり、現在の実装状態ではない。認証・生成・P1音源測定およびP2探索的比較の実施範囲は [README](../README.md) と [P2 repeated DVR](P2_REPLICATED_DVR.md) を参照。試した介入の優位性・無人有料ループ・ユーザー価値は未実証。
+> Historical baseline retained. See the current README and DVR for the evidence boundary. [Portfolio traceability](https://github.com/Gacky-Lab/Gacky-Lab/blob/main/docs/governance/RESEARCH_TRACEABILITY.md).
+
 ## 1. 背景・目的
 
 生成音楽では同じ入力でも出力が変動し、BPM、歌詞、曲長、編成などの指定が保証されない。生成を繰り返すだけでは、どの条件が改善に寄与したか、費用対効果が高かったかを説明しにくい。
